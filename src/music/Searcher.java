@@ -46,7 +46,6 @@ public class Searcher {
 		CloseableHttpClient client = HttpClients.custom().build();
 		try {
 			HttpHost target = new HttpHost(base);
-			System.out.println("Executing on " + target);
 			HttpGet httpGet = new HttpGet(request);
 			HttpResponse response = client.execute(target, httpGet);
 			HttpEntity entity = response.getEntity();

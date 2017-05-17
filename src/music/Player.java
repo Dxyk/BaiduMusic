@@ -1,7 +1,6 @@
 package music;
 
 import java.io.IOException;
-
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpHost;
@@ -10,21 +9,17 @@ import org.apache.http.StatusLine;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
+import org.codehaus.jettison.json.JSONArray;
+import org.codehaus.jettison.json.JSONException;
+import org.codehaus.jettison.json.JSONObject;
 
-import java.sql.Timestamp;
 import song.Song;
 
-public class Downloader {
-
+public class Player {
+	
 	private static final String base = "tingapi.ting.baidu.com";
 
-	/**
-	 * Download a given song
-	 * 
-	 * @param song
-	 * @throws IOException
-	 */
-	public void download(Song song) throws IOException {
+	public void play(Song song) throws IOException {
 
 		System.out.println("Donwloading song: " + song.toString());
 
@@ -34,7 +29,7 @@ public class Downloader {
 		// "/v1/restserver/ting?format=json&calback=&from=webapp_music&"
 		// + "method=baidu.ting.search.catalogSug&query=" + utfKeyword;
 		String request = "/v1/restserver/ting?format=json&calback=&from=webapp_music&"
-				+ "method=baidu.ting.song.downWeb&songid=" + song.getSongId() + "&bit=128&_t=" + dateToStamp();
+				+ "method=baidu.ting.song.play&songid=" + song.getSongId();
 		System.out.println("from url " + base + request);
 
 		CloseableHttpClient client = HttpClients.custom().build();
@@ -48,8 +43,7 @@ public class Downloader {
 			System.out.println("Status: " + status);
 			
 			if (response.getStatusLine().getStatusCode() == 200 && entity != null) {
-				String json = IOUtils.toString(entity.getContent());
-				System.out.println(json);			
+				parseJson(entity);
 			} else {
 				System.err.println("Status error");
 			}
@@ -60,23 +54,32 @@ public class Downloader {
 			client.close();
 		}
 	}
+	
+	
+	private static String parseJson(HttpEntity entity) throws UnsupportedOperationException, IOException, JSONException {		
+		// process the entity to json string format
+		String json = IOUtils.toString(entity.getContent());
+//		System.out.println(json);
+		String jsonSubStr = json.substring(json.indexOf("bitrate", json.indexOf("bitrate") + 1) + 9, json.length() - 1);
+		jsonSubStr = "[" + jsonSubStr + "]";
+		System.out.println(jsonSubStr);
+		JSONArray arr = new JSONArray(jsonSubStr);
+		
+		// Getting the top 3 search result
+		
+		JSONObject obj = arr.getJSONObject(0);
+		String url = obj.getString("show_link");
 
-	/**
-	 * Return the current time stamp
-	 * 
-	 * @return
-	 */
-	private static long dateToStamp() {
-		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-		return timestamp.getTime();
+		return url;
+
 	}
 
 	public static void main(String[] args) {
 		Searcher searcher = new Searcher();
 
-		Downloader downloader = new Downloader();
+		Player player = new Player();
 		try {
-			downloader.download(searcher.searchMusic("Hello").get(1));
+			player.play(searcher.searchMusic("Hello").get(1));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
