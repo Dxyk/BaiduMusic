@@ -1,9 +1,13 @@
- package music;
+package music;
 
+import java.io.BufferedInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;
@@ -17,31 +21,23 @@ import org.codehaus.jettison.json.JSONObject;
 
 import song.Song;
 
-/**
- * A Searcher which takes a keyword and returns a json formated result
- * */
-public class Searcher {
-	private static final String base = "tingapi.ting.baidu.com";
 
-	/**
-	 * Search and return an ArrayList of the top 3 music given the search keyword
-	 *
-	 * @param keyword
-	 * @return
-	 * @throws IOException
-	 */
+/**
+ * A Searcher which takes a keyword and returns the search result as HTML form.
+ * */
+public class SearcherTest {
+
+	private static final String base = "box.zhangmen.baidu.com";
+	
 	public ArrayList<Song> searchMusic(String keyword) throws IOException {
 		ArrayList<Song> result = new ArrayList<Song>();
-		System.out.println("Searching for keyword: " + keyword);
-
-//		// TODO: Determine whether to use utf-8 or not
-//		String utfKeyword = URLEncoder.encode(keyword, "utf-8");
-//		String request = "/v1/restserver/ting?format=xml&calback=&from=webapp_music&"
-//				+ "method=baidu.ting.search.catalogSug&query=" + utfKeyword;
-		String request = "/v1/restserver/ting?format=json&calback=&from=webapp_music&"
-				+ "method=baidu.ting.search.catalogSug&query=" + keyword;
 		
-		System.out.println("From url: " + base + request);
+		System.out.println("Searching for: " + keyword);
+
+		// TODO: Determine whether to use utf-8 or not
+		String utfKeyword = URLEncoder.encode(keyword, "utf-8");
+		String request = "/x?format=xml&op=12&count=1&title=TITLE" + utfKeyword + "$$$$$$";
+//		String request = "/x?op=12&count=1&title=TITLE" + keyword + "$$$$$$";
 		
 		CloseableHttpClient client = HttpClients.custom().build();
 		try {
@@ -51,13 +47,13 @@ public class Searcher {
 			HttpResponse response = client.execute(target, httpGet);
 			HttpEntity entity = response.getEntity();
 
+			// TODO: check status for 200 only? or is there any other code worth checking?
 			StatusLine status = response.getStatusLine();
 			System.out.println("Status: " + status);
-			// Checking if status is success
-			if (response.getStatusLine().getStatusCode() == 200 && entity != null) {
+
+			// get the json content from entity and add each Song obj to result
+			if (entity != null) {
 				result = parseJson(entity);
-			} else {
-				System.err.println("Status error");
 			}
 			
 		} catch (Exception exception) {
@@ -70,26 +66,16 @@ public class Searcher {
 	}
 	
 	/**
-	 * Helper function that takes an entity as input and return a result ArrayList of songs
-	 * @param entity
-	 * @return
-	 * @throws UnsupportedOperationException
-	 * @throws IOException
-	 * @throws JSONException
-	 */
+	 * Helper function that takes an entity as input and return a result list of songs
+	 * */
 	private static ArrayList<Song> parseJson(HttpEntity entity) throws UnsupportedOperationException, IOException, JSONException {
 		ArrayList<Song> result = new ArrayList<Song>();
-		
-		// process the entity to json string format
 		String json = IOUtils.toString(entity.getContent());
-//		System.out.println(json);
 		String jsonSubStr = json.substring(8, json.length() - 1);
 		JSONArray arr = new JSONArray(jsonSubStr);
-		
-		// Getting the top 3 search result
-		for (int i = 0; i < Math.min(arr.length(), 3); i ++) {
+		for (int i = 0; i < arr.length(); i ++) {
 			JSONObject obj = arr.getJSONObject(i);
-//			System.out.println(obj);
+			System.out.println(obj);
 			Song currentSong = new Song(obj.getString("songname"),
 					obj.getInt("songid"),
 					obj.getString("artistname"));
@@ -102,7 +88,6 @@ public class Searcher {
 	public static void main(String[] args) {
 		Searcher searcher = new Searcher();
 		try {
-			System.out.println("Result:");
 			for (Song song: searcher.searchMusic("Hello")) {
 				System.out.println(song);
 			}

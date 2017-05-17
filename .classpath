@@ -2,15 +2,25 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="E:/Xiangyu_Kong/JavaLib/httpcomponents-client-4.5.3-bin/httpcomponents-client-4.5.3/lib/commons-codec-1.9.jar"/>
-	<classpathentry kind="lib" path="E:/Xiangyu_Kong/JavaLib/httpcomponents-client-4.5.3-bin/httpcomponents-client-4.5.3/lib/commons-logging-1.2.jar"/>
-	<classpathentry kind="lib" path="E:/Xiangyu_Kong/JavaLib/httpcomponents-client-4.5.3-bin/httpcomponents-client-4.5.3/lib/fluent-hc-4.5.3.jar"/>
-	<classpathentry kind="lib" path="E:/Xiangyu_Kong/JavaLib/httpcomponents-client-4.5.3-bin/httpcomponents-client-4.5.3/lib/httpclient-4.5.3.jar" sourcepath="E:/Xiangyu_Kong/JavaLib/httpcomponents-client-4.5.3-bin/httpcomponents-client-4.5.3/lib/httpclient-win-4.5.3.jar"/>
-	<classpathentry kind="lib" path="E:/Xiangyu_Kong/JavaLib/httpcomponents-client-4.5.3-bin/httpcomponents-client-4.5.3/lib/httpclient-cache-4.5.3.jar"/>
-	<classpathentry kind="lib" path="E:/Xiangyu_Kong/JavaLib/httpcomponents-client-4.5.3-bin/httpcomponents-client-4.5.3/lib/httpclient-win-4.5.3.jar"/>
-	<classpathentry kind="lib" path="E:/Xiangyu_Kong/JavaLib/httpcomponents-client-4.5.3-bin/httpcomponents-client-4.5.3/lib/httpcore-4.4.6.jar"/>
-	<classpathentry kind="lib" path="E:/Xiangyu_Kong/JavaLib/httpcomponents-client-4.5.3-bin/httpcomponents-client-4.5.3/lib/httpmime-4.5.3.jar"/>
-	<classpathentry kind="lib" path="E:/Xiangyu_Kong/JavaLib/httpcomponents-client-4.5.3-bin/httpcomponents-client-4.5.3/lib/jna-4.1.0.jar"/>
-	<classpathentry kind="lib" path="E:/Xiangyu_Kong/JavaLib/httpcomponents-client-4.5.3-bin/httpcomponents-client-4.5.3/lib/jna-platform-4.1.0.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Apache Httpclient"/>
+	<classpathentry kind="lib" path="C:/Users/idl-ext2/.m2/repository/org/codehaus/jettison/jettison/1.1/jettison-1.1.jar">
+		<attributes>
+			<attribute name="maven.pomderived" value="true"/>
+			<attribute name="maven.groupId" value="org.codehaus.jettison"/>
+			<attribute name="maven.artifactId" value="jettison"/>
+			<attribute name="maven.version" value="1.1"/>
+			<attribute name="maven.scope" value="compile"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/idl-ext2/.m2/repository/commons-io/commons-io/2.4/commons-io-2.4.jar">
+		<attributes>
+			<attribute name="maven.pomderived" value="true"/>
+			<attribute name="maven.groupId" value="commons-io"/>
+			<attribute name="maven.artifactId" value="commons-io"/>
+			<attribute name="maven.version" value="2.4"/>
+			<attribute name="maven.scope" value="compile"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="E:/Xiangyu_Kong/JavaWorkingEnv/JavaLib/jlayer1.0.1/JLayer1.0.1/jl1.0.1.jar" sourcepath="E:/Xiangyu_Kong/JavaWorkingEnv/JavaLib/jlayer1.0.1/JLayer1.0.1/jl1.0.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
