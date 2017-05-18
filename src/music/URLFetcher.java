@@ -21,11 +21,6 @@ public class URLFetcher {
 	private static final String base = "tingapi.ting.baidu.com";
 
 	public Song fetch(Song song) throws IOException {
-		// TODO: Determine whether to use utf-8 or not
-		// String utfKeyword = URLEncoder.encode(keyword, "utf-8");
-		// String request =
-		// "/v1/restserver/ting?format=json&calback=&from=webapp_music&"
-		// + "method=baidu.ting.search.catalogSug&query=" + utfKeyword;
 		String request = "/v1/restserver/ting?format=json&calback=&from=webapp_music&"
 				+ "method=baidu.ting.song.play&songid=" + song.getSongId();
 
@@ -38,7 +33,7 @@ public class URLFetcher {
 			
 			if (response.getStatusLine().getStatusCode() == 200 && entity != null) {
 				URI url = new URI(getDownloadUrl(entity));
-				// System.out.println(url);
+//				System.out.println(url);
 				// open the url to listen
 				song.setUrl(url);
 				return song;

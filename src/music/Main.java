@@ -41,6 +41,10 @@ public class Main {
 		try {
 			// Search for music according to keyword
 			ArrayList<Song> result = searcher.searchMusic(input);
+			if (result == null) {
+				System.out.println("Result not found. Quitting ...");
+				return;
+			}
 			System.out.println("--------------------");
 			System.out.println("Please select the song (index) you want to listen to:");
 			for (int i = 0; i < result.size(); i++) {
@@ -63,14 +67,14 @@ public class Main {
 				System.exit(-1);
 			}
 
-			if (isNumeric(input) && (Integer.valueOf(input) < 4 || Integer.valueOf(input) > 0)) {
+			if (isNumeric(input) && Integer.valueOf(input) < 4 && Integer.valueOf(input) > 0) {
 				selectedSong = result.get(Integer.valueOf(input) - 1);
 				System.out.println("You selected: ");
 				System.out.println(selectedSong);
 				PlayerGUI playerGUI = new PlayerGUI(selectedSong);
 				playerGUI.createAndShowGUI();
 			} else {
-				System.err.println("Invalid index");
+				System.out.println("Invalid index, Quitting ...");
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -78,7 +82,7 @@ public class Main {
 			e.printStackTrace();
 		}
 		
-		System.out.println("Quitting ...");
+		System.out.println("Success");
 	}
 
 }

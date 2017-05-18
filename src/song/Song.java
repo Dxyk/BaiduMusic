@@ -1,6 +1,8 @@
 package song;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URI;
+import java.net.URLDecoder;
 
 public class Song {
 	private String name;
@@ -22,7 +24,14 @@ public class Song {
 
 	@Override
 	public String toString() {
-		return name + " - " + author + ";\n\tID: " + songId + "; url: " + url;
+		try {
+			String decodedName = URLDecoder.decode(name, "UTF8");
+			String decodedAuthor = URLDecoder.decode(author, "UTF8");
+			return decodedName + " - " + decodedAuthor + ";\n\tID: " + songId + "; url: " + url;
+		} catch (UnsupportedEncodingException e) {
+			return name + " - " + author + ";\n\tID: " + songId + "; url: " + url;
+		}
+		
 	}
 
 	public int getSongId() {

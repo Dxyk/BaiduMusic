@@ -1,6 +1,7 @@
  package music;
 
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 
 import org.apache.commons.io.IOUtils;
@@ -34,12 +35,9 @@ public class Searcher {
 		ArrayList<Song> result = new ArrayList<Song>();
 		System.out.println("Searching for keyword: " + keyword);
 
-//		// TODO: Determine whether to use utf-8 or not
-//		String utfKeyword = URLEncoder.encode(keyword, "utf-8");
-//		String request = "/v1/restserver/ting?format=xml&calback=&from=webapp_music&"
-//				+ "method=baidu.ting.search.catalogSug&query=" + utfKeyword;
-		String request = "/v1/restserver/ting?format=json&calback=&from=webapp_music&"
-				+ "method=baidu.ting.search.catalogSug&query=" + keyword;
+		String utfKeyword = URLEncoder.encode(keyword, "utf-8");
+		String request = "/v1/restserver/ting?format=json&encoding=utf-8&calback=&from=webapp_music&"
+				+ "method=baidu.ting.search.catalogSug&query=" + utfKeyword;
 		
 		System.out.println("From url: " + base + request);
 		
@@ -82,6 +80,9 @@ public class Searcher {
 		// process the entity to json string format
 		String json = IOUtils.toString(entity.getContent());
 //		System.out.println(json);
+		if (json.contains("\"error_message\":\"params error\"") || json.contains("\"error_message\":\"failed\"")) {
+			return null;
+		}
 		String jsonSubStr = json.substring(8, json.length() - 1);
 		JSONArray arr = new JSONArray(jsonSubStr);
 		
@@ -89,9 +90,10 @@ public class Searcher {
 		for (int i = 0; i < Math.min(arr.length(), 3); i ++) {
 			JSONObject obj = arr.getJSONObject(i);
 //			System.out.println(obj);
-			Song currentSong = new Song(obj.getString("songname"),
+			System.out.println(URLEncoder.encode(obj.getString("songname"), "GBK"));
+			Song currentSong = new Song(URLEncoder.encode(obj.getString("songname"), "GBK"),
 					obj.getInt("songid"),
-					obj.getString("artistname"));
+					URLEncoder.encode(obj.getString("artistname"), "GBK"));
 			result.add(currentSong);
 		}
 
@@ -102,7 +104,7 @@ public class Searcher {
 		Searcher searcher = new Searcher();
 		try {
 			System.out.println("Result:");
-			for (Song song: searcher.searchMusic("Hello")) {
+			for (Song song: searcher.searchMusic("Ìýº£")) {
 				System.out.println(song);
 			}
 		} catch (IOException exception) {
