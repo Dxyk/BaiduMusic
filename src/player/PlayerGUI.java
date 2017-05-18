@@ -35,7 +35,7 @@ public class PlayerGUI {
 		player = new PausablePlayer(new URL(urlAsString).openStream(),
 				javazoom.jl.player.FactoryRegistry.systemRegistry().createAudioDevice());
 		
-		window = new JFrame();
+		window = new JFrame(song.toString());
 		buttonContainer = new JPanel();
 		startButton = new JButton("start");
 		startButton.addActionListener(new ActionListener() {
