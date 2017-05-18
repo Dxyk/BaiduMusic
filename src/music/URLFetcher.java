@@ -1,41 +1,33 @@
 package music;
 
 import java.io.IOException;
+import java.net.URI;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;
-import org.apache.http.StatusLine;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
+import org.codehaus.jettison.json.JSONArray;
+import org.codehaus.jettison.json.JSONException;
+import org.codehaus.jettison.json.JSONObject;
 
-import java.sql.Timestamp;
 import song.Song;
 
-public class Downloader {
-
+public class URLFetcher {
+	
 	private static final String base = "tingapi.ting.baidu.com";
 
-	/**
-	 * Download a given song
-	 * 
-	 * @param song
-	 * @throws IOException
-	 */
-	public void download(Song song) throws IOException {
-
-		System.out.println("Donwloading song: " + song.toString());
-
+	public Song fetch(Song song) throws IOException {
 		// TODO: Determine whether to use utf-8 or not
 		// String utfKeyword = URLEncoder.encode(keyword, "utf-8");
 		// String request =
 		// "/v1/restserver/ting?format=json&calback=&from=webapp_music&"
 		// + "method=baidu.ting.search.catalogSug&query=" + utfKeyword;
 		String request = "/v1/restserver/ting?format=json&calback=&from=webapp_music&"
-				+ "method=baidu.ting.song.downWeb&songid=" + song.getSongId() + "&bit=128&_t=" + dateToStamp();
-		System.out.println("from url " + base + request);
+				+ "method=baidu.ting.song.play&songid=" + song.getSongId();
 
 		CloseableHttpClient client = HttpClients.custom().build();
 		try {
@@ -44,12 +36,12 @@ public class Downloader {
 			HttpResponse response = client.execute(target, httpGet);
 			HttpEntity entity = response.getEntity();
 			
-			StatusLine status = response.getStatusLine();
-			System.out.println("Status: " + status);
-			
 			if (response.getStatusLine().getStatusCode() == 200 && entity != null) {
-				String json = IOUtils.toString(entity.getContent());
-				System.out.println(json);			
+				URI url = new URI(getDownloadUrl(entity));
+				// System.out.println(url);
+				// open the url to listen
+				song.setUrl(url);
+				return song;
 			} else {
 				System.err.println("Status error");
 			}
@@ -59,24 +51,34 @@ public class Downloader {
 		} finally {
 			client.close();
 		}
+		System.err.println("Failed to extract url");
+		return song;
 	}
+	
+	
+	private static String getDownloadUrl(HttpEntity entity) throws UnsupportedOperationException, IOException, JSONException {		
+		// process the entity to json string format
+		String json = IOUtils.toString(entity.getContent());
+//		System.out.println(json);
+		String jsonSubStr = json.substring(json.indexOf("bitrate", json.indexOf("bitrate") + 1) + 9, json.length() - 1);
+		jsonSubStr = "[" + jsonSubStr + "]";
+//		System.out.println(jsonSubStr);
+		JSONArray arr = new JSONArray(jsonSubStr);
+		
+		// get the download link of the song
+		JSONObject obj = arr.getJSONObject(0);
+		String url = obj.getString("show_link");
 
-	/**
-	 * Return the current time stamp
-	 * 
-	 * @return
-	 */
-	private static long dateToStamp() {
-		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-		return timestamp.getTime();
+		return url;
+
 	}
 
 	public static void main(String[] args) {
 		Searcher searcher = new Searcher();
 
-		Downloader downloader = new Downloader();
+		URLFetcher player = new URLFetcher();
 		try {
-			downloader.download(searcher.searchMusic("Hello").get(1));
+			player.fetch(searcher.searchMusic("Hello").get(1));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
