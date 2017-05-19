@@ -72,7 +72,8 @@ public class URLFetcher {
 	 */
 	private static String getPlayableUrl(HttpEntity entity) throws UnsupportedOperationException, IOException, JSONException {		
 		// process the entity to json string format
-		String json = IOUtils.toString(entity.getContent());
+		String json = IOUtils.toString(entity.getContent(), "GBK");
+//		String json = IOUtils.toString(entity.getContent());
 //		System.out.println(json);
 		String jsonSubStr = json.substring(json.indexOf("bitrate", json.indexOf("bitrate") + 1) + 9, json.length() - 1);
 		jsonSubStr = "[" + jsonSubStr + "]";
@@ -90,7 +91,7 @@ public class URLFetcher {
 	// Demo
 	public static void main(String[] args) {
 		try {
-			URLFetcher.fetch(Searcher.searchMusic("Ã˝∫£").get(1));
+			URLFetcher.fetch(Searcher.searchMusic("Âë®Êù∞‰º¶").get(1));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

@@ -86,7 +86,8 @@ public class Searcher {
 		ArrayList<Song> result = new ArrayList<Song>();
 
 		// process the entity to json string format
-		String json = IOUtils.toString(entity.getContent());
+		String json = IOUtils.toString(entity.getContent(), "GBK");
+//		String json = IOUtils.toString(entity.getContent());
 		// Error checking if searching failed
 		if (json.contains("\"error_message\":\"params error\"") || json.contains("\"error_message\":\"failed\"")) {
 			return null;
@@ -119,7 +120,7 @@ public class Searcher {
 	public static void main(String[] args) {
 		try {
 			System.out.println("Result:");
-			for (Song song: Searcher.searchMusic("÷‹Ω‹¬◊")) {
+			for (Song song: Searcher.searchMusic("Âë®Êù∞‰º¶")) {
 				System.out.println(song);
 			}
 		} catch (IOException exception) {
