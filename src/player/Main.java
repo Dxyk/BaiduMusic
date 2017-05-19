@@ -1,4 +1,4 @@
-package music;
+package player;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -6,11 +6,18 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 import javazoom.jl.decoder.JavaLayerException;
-import player.PlayerGUI;
 import song.Song;
+import util.Searcher;
+import util.URLFetcher;
 
 public class Main {
 
+	/**
+	 * Helper function that determines whether a string is numeric
+	 * 
+	 * @param str	The string to be determined
+	 * @return		Whether the string is numeric
+	 */
 	private static boolean isNumeric(String str) {
 		try {
 			Integer.parseInt(str);
@@ -21,8 +28,6 @@ public class Main {
 	}
 
 	public static void main(String[] args) {
-		Searcher searcher = new Searcher();
-		URLFetcher fetcher = new URLFetcher();
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		Song selectedSong = null;
 		String input = "";
@@ -40,7 +45,7 @@ public class Main {
 
 		try {
 			// Search for music according to keyword
-			ArrayList<Song> result = searcher.searchMusic(input);
+			ArrayList<Song> result = Searcher.searchMusic(input);
 			if (result == null) {
 				System.out.println("Result not found. Quitting ...");
 				return;
@@ -49,7 +54,7 @@ public class Main {
 			System.out.println("Please select the song (index) you want to listen to:");
 			for (int i = 0; i < result.size(); i++) {
 				Song currentSong = result.get(i);
-				currentSong = fetcher.fetch(currentSong);
+				currentSong = URLFetcher.fetch(currentSong);
 				if (currentSong.hasUrl()) {
 					System.out.println((i + 1) + ". " + currentSong);
 				} else {
@@ -64,7 +69,6 @@ public class Main {
 			} catch (IOException e) {
 				e.printStackTrace();
 				System.out.println("Quitting... ");
-				System.exit(-1);
 			}
 
 			if (isNumeric(input) && Integer.valueOf(input) < 4 && Integer.valueOf(input) > 0) {
@@ -73,6 +77,7 @@ public class Main {
 				System.out.println(selectedSong);
 				PlayerGUI playerGUI = new PlayerGUI(selectedSong);
 				playerGUI.createAndShowGUI();
+				System.out.println("Success");
 			} else {
 				System.out.println("Invalid index, Quitting ...");
 			}
@@ -82,7 +87,7 @@ public class Main {
 			e.printStackTrace();
 		}
 		
-		System.out.println("Success");
+		
 	}
 
 }

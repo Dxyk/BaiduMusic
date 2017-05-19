@@ -1,4 +1,4 @@
-package music;
+package util;
 
 import java.io.IOException;
 import java.net.URI;
@@ -16,11 +16,24 @@ import org.codehaus.jettison.json.JSONObject;
 
 import song.Song;
 
+/**
+ * A URL fetcher that when given a song, fetch the playable url from ting.baidu.com
+ * and store it to the song's url
+ * 
+ * @author Xiangyu Kong
+ */
 public class URLFetcher {
-	
+	// The base of the fetching url
 	private static final String base = "tingapi.ting.baidu.com";
 
-	public Song fetch(Song song) throws IOException {
+	/**
+	 * Fetch the url of a song and add it to the song's attributes.
+	 * 
+	 * @param song			The song that need to be fetched
+	 * @return				The song with the url added to its attribute
+	 * @throws IOException	If the song is not accessible
+	 */
+	public static Song fetch(Song song) throws IOException {
 		String request = "/v1/restserver/ting?format=json&calback=&from=webapp_music&"
 				+ "method=baidu.ting.song.play&songid=" + song.getSongId();
 
@@ -31,14 +44,12 @@ public class URLFetcher {
 			HttpResponse response = client.execute(target, httpGet);
 			HttpEntity entity = response.getEntity();
 			
+			// Set the url of the song
 			if (response.getStatusLine().getStatusCode() == 200 && entity != null) {
-				URI url = new URI(getDownloadUrl(entity));
+				URI url = new URI(getPlayableUrl(entity));
 //				System.out.println(url);
-				// open the url to listen
 				song.setUrl(url);
 				return song;
-			} else {
-				System.err.println("Status error");
 			}
 			
 		} catch (Exception exception) {
@@ -50,17 +61,25 @@ public class URLFetcher {
 		return song;
 	}
 	
-	
-	private static String getDownloadUrl(HttpEntity entity) throws UnsupportedOperationException, IOException, JSONException {		
+	/**
+	 * Helper function that parse the json from the entity and get the playable URL
+	 * 
+	 * @param entity		The http entity that contains the playable URL
+	 * @return				The string formated url
+	 * @throws UnsupportedOperationException
+	 * @throws IOException		If the song cannot be accessed
+	 * @throws JSONException	If the Json file in the entity is not well formated
+	 */
+	private static String getPlayableUrl(HttpEntity entity) throws UnsupportedOperationException, IOException, JSONException {		
 		// process the entity to json string format
 		String json = IOUtils.toString(entity.getContent());
 //		System.out.println(json);
 		String jsonSubStr = json.substring(json.indexOf("bitrate", json.indexOf("bitrate") + 1) + 9, json.length() - 1);
 		jsonSubStr = "[" + jsonSubStr + "]";
 //		System.out.println(jsonSubStr);
-		JSONArray arr = new JSONArray(jsonSubStr);
 		
-		// get the download link of the song
+		// get the playable link of the song
+		JSONArray arr = new JSONArray(jsonSubStr);
 		JSONObject obj = arr.getJSONObject(0);
 		String url = obj.getString("show_link");
 
@@ -68,12 +87,10 @@ public class URLFetcher {
 
 	}
 
+	// Demo
 	public static void main(String[] args) {
-		Searcher searcher = new Searcher();
-
-		URLFetcher player = new URLFetcher();
 		try {
-			player.fetch(searcher.searchMusic("Hello").get(1));
+			URLFetcher.fetch(Searcher.searchMusic("Ìýº£").get(1));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

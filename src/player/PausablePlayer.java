@@ -6,11 +6,17 @@ import java.net.URL;
 import javazoom.jl.decoder.JavaLayerException;
 import javazoom.jl.player.AudioDevice;
 import javazoom.jl.player.Player;
-import music.Searcher;
-import music.URLFetcher;
 import song.Song;
+import util.Searcher;
+import util.URLFetcher;
 
-/* Credit to Durandal and Zahlii on stackoverflow.com */
+/**
+ * A Pausable Player implemented using JLayer.
+ * Supported functions: play, stop, pause and resume.
+ * 
+ * @author idl-ext2
+ * 			Credit to Durandal and Zahlii on stackoverflow.com
+ */
 public class PausablePlayer {
 
 	private final static int NOTSTARTED = 0;
@@ -27,17 +33,27 @@ public class PausablePlayer {
 	// status variable what player thread is doing/supposed to do
 	private int playerStatus = NOTSTARTED;
 
+	/**
+	 * Construct the player using a given input stream
+	 * @see javazoom.jl.player.PausablePlayer
+	 */
 	public PausablePlayer(final InputStream inputStream) throws JavaLayerException {
 		this.player = new Player(inputStream);
 	}
 
+	/**
+	 * Construct the player using a given input stream and an audio device
+	 * @see javazoom.jl.player.PausablePlayer
+	 */
 	public PausablePlayer(final InputStream inputStream, final AudioDevice audioDevice)
 			throws JavaLayerException {
 		this.player = new Player(inputStream, audioDevice);
 	}
 
 	/**
-	 * Starts playback (resumes if paused)
+	 * Starts playback (resumes if paused).
+	 * 
+	 * @throws JavaLayerException
 	 */
 	public void play() throws JavaLayerException {
 		synchronized (playerLock) {
@@ -97,6 +113,9 @@ public class PausablePlayer {
 		}
 	}
 
+	/**
+	 * The internal run method for the player to be runnable
+	 */
 	private void playInternal() {
 		while (playerStatus != FINISHED) {
 			try {
@@ -135,17 +154,20 @@ public class PausablePlayer {
 		}
 	}
 	
+	/**
+	 * Determines if the player has finished playing
+	 * 
+	 * @return	the current state is finished
+	 */
 	public boolean isFinished() {
 		return playerStatus == FINISHED;
 	}
 
 	// demo how to use
 	public static void main(String[] argv) {
-		Searcher searcher = new Searcher();
-		URLFetcher fetcher = new URLFetcher();
 		try {
-			Song song = searcher.searchMusic("Hello").get(0);
-			fetcher.fetch(song);
+			Song song = Searcher.searchMusic("Hello").get(0);
+			URLFetcher.fetch(song);
 			String urlAsString = song.getUrl().toString();
 
 			PausablePlayer player = new PausablePlayer(new URL(urlAsString).openStream(),
