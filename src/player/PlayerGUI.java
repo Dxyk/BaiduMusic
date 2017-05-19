@@ -73,7 +73,7 @@ public class PlayerGUI {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				player.stop();
-				window.dispose();
+				System.exit(0);
 			}
 		});
 		// Pause button: pauses the song on click
