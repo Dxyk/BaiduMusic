@@ -112,7 +112,6 @@ public class Searcher {
 			Song currentSong = new Song(decodedName, obj.getInt("songid"), decodedAuthor);
 			result.add(currentSong);
 		}
-
 		return result;
 	}
 
@@ -120,7 +119,7 @@ public class Searcher {
 	public static void main(String[] args) {
 		try {
 			System.out.println("Result:");
-			for (Song song: Searcher.searchMusic("周杰伦")) {
+			for (Song song: Searcher.searchMusic("鍛ㄦ澃浼�")) {
 				System.out.println(song);
 			}
 		} catch (IOException exception) {
