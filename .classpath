@@ -22,5 +22,60 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="E:/Xiangyu_Kong/JavaWorkingEnv/JavaLib/jlayer1.0.1/JLayer1.0.1/jl1.0.1.jar" sourcepath="E:/Xiangyu_Kong/JavaWorkingEnv/JavaLib/jlayer1.0.1/JLayer1.0.1/jl1.0.1.jar"/>
+	<classpathentry kind="lib" path="/Users/DanielKong/Documents/JavaLibrary/httpComponents/httpcomponents-client-4.5.3/lib/commons-codec-1.9.jar">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="/Users/DanielKong/Documents/JavaLibrary/httpComponents/httpcomponents-client-4.5.3/lib/commons-codec-1.9.jar"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/DanielKong/Documents/JavaLibrary/httpComponents/httpcomponents-client-4.5.3/lib/commons-logging-1.2.jar">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="/Users/DanielKong/Documents/JavaLibrary/httpComponents/httpcomponents-client-4.5.3/lib/commons-logging-1.2.jar"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/DanielKong/Documents/JavaLibrary/httpComponents/httpcomponents-client-4.5.3/lib/fluent-hc-4.5.3.jar">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="/Users/DanielKong/Documents/JavaLibrary/httpComponents/httpcomponents-client-4.5.3/lib/fluent-hc-4.5.3.jar"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/DanielKong/Documents/JavaLibrary/httpComponents/httpcomponents-client-4.5.3/lib/httpclient-4.5.3.jar">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="/Users/DanielKong/Documents/JavaLibrary/httpComponents/httpcomponents-client-4.5.3/lib/httpclient-4.5.3.jar"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/DanielKong/Documents/JavaLibrary/httpComponents/httpcomponents-client-4.5.3/lib/httpclient-cache-4.5.3.jar">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="/Users/DanielKong/Documents/JavaLibrary/httpComponents/httpcomponents-client-4.5.3/lib/httpclient-cache-4.5.3.jar"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/DanielKong/Documents/JavaLibrary/httpComponents/httpcomponents-client-4.5.3/lib/httpclient-win-4.5.3.jar">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="/Users/DanielKong/Documents/JavaLibrary/httpComponents/httpcomponents-client-4.5.3/lib/httpclient-win-4.5.3.jar"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/DanielKong/Documents/JavaLibrary/httpComponents/httpcomponents-client-4.5.3/lib/httpcore-4.4.6.jar">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="/Users/DanielKong/Documents/JavaLibrary/httpComponents/httpcomponents-client-4.5.3/lib/httpcore-4.4.6.jar"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/DanielKong/Documents/JavaLibrary/httpComponents/httpcomponents-client-4.5.3/lib/httpmime-4.5.3.jar">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="/Users/DanielKong/Documents/JavaLibrary/httpComponents/httpcomponents-client-4.5.3/lib/httpmime-4.5.3.jar"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/DanielKong/Documents/JavaLibrary/httpComponents/httpcomponents-client-4.5.3/lib/jna-4.1.0.jar">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="/Users/DanielKong/Documents/JavaLibrary/httpComponents/httpcomponents-client-4.5.3/lib/jna-4.1.0.jar"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/DanielKong/Documents/JavaLibrary/httpComponents/httpcomponents-client-4.5.3/lib/jna-platform-4.1.0.jar">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="/Users/DanielKong/Documents/JavaLibrary/httpComponents/httpcomponents-client-4.5.3/lib/jna-platform-4.1.0.jar"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/DanielKong/Documents/JavaLibrary/JLayer/JLayer1.0.1/jl1.0.1.jar">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="/Users/DanielKong/Documents/JavaLibrary/JLayer/JLayer1.0.1/jl1.0.1.jar"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
