@@ -34,7 +34,7 @@ public class URLFetcher {
 	 * @throws IOException	If the song is not accessible
 	 */
 	public static Song fetch(Song song) throws IOException {
-		String request = "/v1/restserver/ting?format=json&calback=&from=webapp_music&"
+		String request = "/v1/restserver/ting?format=json&callback=&from=webapp_music&"
 				+ "method=baidu.ting.song.play&songid=" + song.getSongId();
 
 		CloseableHttpClient client = HttpClients.custom().build();
@@ -73,11 +73,11 @@ public class URLFetcher {
 	private static String getPlayableUrl(HttpEntity entity) throws UnsupportedOperationException, IOException, JSONException {		
 		// process the entity to json string format
 		String json = IOUtils.toString(entity.getContent(), "GBK");
-//		String json = IOUtils.toString(entity.getContent());
 //		System.out.println(json);
-		String jsonSubStr = json.substring(json.indexOf("bitrate", json.indexOf("bitrate") + 1) + 9, json.length() - 1);
+//		String jsonSubStr = json;
+		String jsonSubStr = json.substring(json.indexOf("bitrate", json.indexOf("bitrate") + 1) + 9, json.length() - 3);
 		jsonSubStr = "[" + jsonSubStr + "]";
-//		System.out.println(jsonSubStr);
+		System.out.println(jsonSubStr);
 		
 		// get the playable link of the song
 		JSONArray arr = new JSONArray(jsonSubStr);
@@ -91,7 +91,7 @@ public class URLFetcher {
 	// Demo
 	public static void main(String[] args) {
 		try {
-			URLFetcher.fetch(Searcher.searchMusic("周杰伦").get(1));
+			URLFetcher.fetch(Searcher.searchMusic("Hello").get(1));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

@@ -44,10 +44,11 @@ public class Searcher {
 		System.out.println("Searching for keyword: " + keyword);
 
 		String utfKeyword = URLEncoder.encode(keyword, "UTF8");
-		String request = "/v1/restserver/ting?format=json&encoding=utf-8&calback=&from=webapp_music&"
+		String request = "/v1/restserver/ting?format=json&encoding=utf-8&callback=&from=webapp_music&"
 				+ "method=baidu.ting.search.catalogSug&query=" + utfKeyword;
 
-		System.out.println("From url: " + base + request);
+		System.out.println("==============================");
+		System.out.println("Searching from url: http://" + base + request);
 
 		CloseableHttpClient client = HttpClients.custom().build();
 		try {
@@ -87,28 +88,28 @@ public class Searcher {
 
 		// process the entity to json string format
 		String json = IOUtils.toString(entity.getContent(), "GBK");
-//		String json = IOUtils.toString(entity.getContent());
 		// Error checking if searching failed
 		if (json.contains("\"error_message\":\"params error\"") || json.contains("\"error_message\":\"failed\"")) {
 			return null;
 		}
 
-		String jsonSubStr = json.substring(8, json.length() - 1);
+		String jsonSubStr = json.substring(9, json.length() - 3);
 		JSONArray arr = new JSONArray(jsonSubStr);
 
+		
 		// Getting the top 3 search result
 		for (int i = 0; i < Math.min(arr.length(), numResult); i ++) {
 			JSONObject obj = arr.getJSONObject(i);
-			System.out.println("==================");
-			System.out.println(obj);
+//			System.out.println("==================");
+//			System.out.println(obj);
 
 			String encodedName = URLEncoder.encode(obj.getString("songname"), "GBK");
 			String encodedAuthor = URLEncoder.encode(obj.getString("artistname"), "GBK");
 			String decodedName = URLDecoder.decode(encodedName, "UTF8");
 			String decodedAuthor = URLDecoder.decode(encodedAuthor, "UTF8");
-			System.out.println("Passed in = " + obj.getString("artistname"));
-			System.out.println("Encoded with GBK = " + encodedAuthor);
-			System.out.println("Decoded with UTF8 = " + decodedAuthor);
+//			System.out.println("Passed in = " + obj.getString("artistname"));
+//			System.out.println("Encoded with GBK = " + encodedAuthor);
+//			System.out.println("Decoded with UTF8 = " + decodedAuthor);
 			Song currentSong = new Song(decodedName, obj.getInt("songid"), decodedAuthor);
 			result.add(currentSong);
 		}
@@ -119,7 +120,7 @@ public class Searcher {
 	public static void main(String[] args) {
 		try {
 			System.out.println("Result:");
-			for (Song song: Searcher.searchMusic("鍛ㄦ澃浼�")) {
+			for (Song song: Searcher.searchMusic("Hello")) {
 				System.out.println(song);
 			}
 		} catch (IOException exception) {
