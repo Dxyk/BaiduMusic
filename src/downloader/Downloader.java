@@ -1,9 +1,12 @@
 package downloader;
 
 import java.awt.Desktop;
+import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.sql.Timestamp;
+
+import org.apache.commons.io.FileUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;
@@ -36,12 +39,15 @@ public class Downloader {
 
 			// Download the song
 
-			System.out.println(response.getStatusLine());
+			System.out.println("Status: " + response.getStatusLine());
 			if (response.getStatusLine().getStatusCode() == 200 && entity != null) {
 				Desktop desktop = java.awt.Desktop.getDesktop();
 				URI url = new URI("http://" + base + request);
 				desktop.browse(url);
-
+				
+//				File f = new File("C:\\Users\\idl-ext2\\Downloads\\" + song.getName());
+//				f.createNewFile();
+//				FileUtils.copyURLToFile(url.toURL(), f);
 				return true;
 			}
 

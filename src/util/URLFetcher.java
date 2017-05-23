@@ -77,7 +77,6 @@ public class URLFetcher {
 //		String jsonSubStr = json;
 		String jsonSubStr = json.substring(json.indexOf("bitrate", json.indexOf("bitrate") + 1) + 9, json.length() - 3);
 		jsonSubStr = "[" + jsonSubStr + "]";
-		System.out.println(jsonSubStr);
 		
 		// get the playable link of the song
 		JSONArray arr = new JSONArray(jsonSubStr);

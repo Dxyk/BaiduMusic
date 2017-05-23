@@ -73,4 +73,16 @@ public class Song {
 		return url;
 	}
 
+
+	/**
+	 * Get the name of the song
+	 * 
+	 * @return the name
+	 */
+	public String getName() {
+		return name;
+	}
+	
+	
+
 }
