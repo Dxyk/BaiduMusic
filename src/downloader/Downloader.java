@@ -69,6 +69,7 @@ public class Downloader {
 		try {
 			song = Searcher.searchMusic("Hello").get(0);
 			URLFetcher.fetch(song);
+			System.out.println(song);
 			Downloader.download(song);
 		} catch (IOException e) {
 			e.printStackTrace();

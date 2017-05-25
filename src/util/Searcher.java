@@ -30,7 +30,7 @@ public class Searcher {
 	// base of the searching url
 	private static final String base = "tingapi.ting.baidu.com";
 	// the maximum number of results
-	private static final int numResult = 3;
+	private static final int NUMRESULT = 3;
 
 	/**
 	 * Search and return an ArrayList of the top 3 music given the search keyword
@@ -98,7 +98,7 @@ public class Searcher {
 		JSONArray arr = object.getJSONArray("song");
 		
 		// Getting the top 3 search result
-		for (int i = 0; i < Math.min(arr.length(), numResult); i ++) {
+		for (int i = 0; i < Math.min(arr.length(), NUMRESULT); i ++) {
 			JSONObject obj = arr.getJSONObject(i);
 
 			String encodedName = URLEncoder.encode(obj.getString("songname"), "GBK");
