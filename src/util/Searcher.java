@@ -88,28 +88,23 @@ public class Searcher {
 
 		// process the entity to json string format
 		String json = IOUtils.toString(entity.getContent(), "GBK");
+		JSONObject object = new JSONObject(json.substring(1, json.length() - 1));
+
 		// Error checking if searching failed
-		if (json.contains("\"error_message\":\"params error\"") || json.contains("\"error_message\":\"failed\"")) {
+		if (object.has("error_message")) {
 			return null;
 		}
 
-		String jsonSubStr = json.substring(9, json.length() - 3);
-		JSONArray arr = new JSONArray(jsonSubStr);
-
+		JSONArray arr = object.getJSONArray("song");
 		
 		// Getting the top 3 search result
 		for (int i = 0; i < Math.min(arr.length(), numResult); i ++) {
 			JSONObject obj = arr.getJSONObject(i);
-//			System.out.println("==================");
-//			System.out.println(obj);
 
 			String encodedName = URLEncoder.encode(obj.getString("songname"), "GBK");
 			String encodedAuthor = URLEncoder.encode(obj.getString("artistname"), "GBK");
 			String decodedName = URLDecoder.decode(encodedName, "UTF8");
 			String decodedAuthor = URLDecoder.decode(encodedAuthor, "UTF8");
-//			System.out.println("Passed in = " + obj.getString("artistname"));
-//			System.out.println("Encoded with GBK = " + encodedAuthor);
-//			System.out.println("Decoded with UTF8 = " + decodedAuthor);
 			Song currentSong = new Song(decodedName, obj.getInt("songid"), decodedAuthor);
 			result.add(currentSong);
 		}

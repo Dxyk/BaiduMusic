@@ -1,12 +1,10 @@
 package downloader;
 
 import java.awt.Desktop;
-import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.sql.Timestamp;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;

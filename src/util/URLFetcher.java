@@ -10,7 +10,6 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
-import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
@@ -75,13 +74,11 @@ public class URLFetcher {
 		String json = IOUtils.toString(entity.getContent(), "GBK");
 //		System.out.println(json);
 //		String jsonSubStr = json;
-		String jsonSubStr = json.substring(json.indexOf("bitrate", json.indexOf("bitrate") + 1) + 9, json.length() - 3);
-		jsonSubStr = "[" + jsonSubStr + "]";
+		JSONObject object = new JSONObject(json.substring(1, json.length() - 1));
+		System.out.println(object);
 		
 		// get the playable link of the song
-		JSONArray arr = new JSONArray(jsonSubStr);
-		JSONObject obj = arr.getJSONObject(0);
-		String url = obj.getString("show_link");
+		String url = object.getJSONObject("bitrate").getString("show_link");
 
 		return url;
 
