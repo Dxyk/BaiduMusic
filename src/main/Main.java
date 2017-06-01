@@ -1,4 +1,4 @@
-package player;
+package main;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 import javazoom.jl.decoder.JavaLayerException;
+import player.PlayerGUI;
 import song.Song;
 import util.Searcher;
 import util.URLFetcher;
